@@ -1,63 +1,33 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     <head>
         <title>Quotes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/quotes.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <h1 class="m-3 p-2">Welcome, {{ request.session.user.name }}!</h1>
-        <a href="/logout" class="m-3 p-2">Log Out</a>
-        <div>
-            {% if messages %}
-            <ul class="messages">    
-                {% for message in messages %}    
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <div class="d-flex flex-row">
-            <div class="m-3 p-2 border border-dark black">
-                <h2>Quotable Quotes</h2>
-                {% for quote in quotes %}
-                <div>
-                    {% if quote.addedBy.email == request.session.user.email %}
-                    <p><a href="/quotes/edit/{{quote.id}}">Edit</a> | <a href="/quotes/delete/{{quote.id}}">Delete</a></p>
-                    {% endif %}
-                    <p>{{quote.quotedBy}}: {{quote.message}}</p>
-                    <p>Added By: <a href="/users/{{quote.addedBy.id}}">{{quote.addedBy.name}}</a></p>
-                    <form action="/quotes/addfavorite/{{quote.id}}" method="POST">
-                        {% csrf_token %}
-                        <input type="submit" name="addFavorite" value="Add To Favorites">
-                    </form>
+        <div class="container">
+            <div class="navbar d-flex flex-row justify-content-between align-items-start bg-info">
+                <h1 class="mt-3">QuoteBase</h1>
+                <div class="d-flex flex-column align align-items-start">
+                    <h1 class="mt-3">Welcome, {{ request.session.user.name }}!</h1>
+                    <h4><a href="/logout" class="text-reset">Log Out</a></h4>
                 </div>
-                {% endfor %}
             </div>
-            <div class="m-3 p-2 border border-dark black">
-                <h2>Your Favorites</h2>
-                {% for quote in currentuser.favorites.all %}
-                <div>
-                    {% if quote.addedBy.email == request.session.user.email %}
-                    <p><a href="/quotes/edit/{{quote.id}}">Edit</a> | <a href="/quotes/delete/{{quote.id}}">Delete</a></p>
-                    {% endif %}
-                    <p>{{quote.quotedBy}}: {{quote.message}}</p>
-                    <p>Added By: <a href="/users/{{quote.addedBy.id}}">{{quote.addedBy.name}}</a></p>
-                    <form action="/quotes/removefavorite/{{quote.id}}" method="POST">
-                        {% csrf_token %}
-                        <input type="submit" name="removeFavorite" value="Remove From Favorites">
-                    </form>
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="body">
+                    {% include 'quotesbody.html' %}
                 </div>
-                {% endfor %}
-            </div>
         </div>
-        <div class="d-inline-block m-3 p-2 border border-dark black">
-            <form  action="quotes/create" method="POST">
-                {% csrf_token %}
-                <h3>Add Quote</h3>
-                <p>Quoted By: <input type="text" name="quotedBy"></p>
-                <p>Message: <textarea name="message" cols="30" rows="10"></textarea></p>
-                <input type="submit">
-            </form>
-        </div>
+        <script src="{% static 'js/quotes.js' %}"></script>
     </body>
 </html>

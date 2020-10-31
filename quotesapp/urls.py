@@ -5,7 +5,6 @@ urlpatterns = [
     path('', views.index),
     path('register', views.register),
     path('login', views.login),
-    path('login/success', views.loginsuccess),
     path('logout', views.logout),
     path('quotes', views.quotes),
     path('quotes/create', views.createQuote),
@@ -14,5 +13,6 @@ urlpatterns = [
     path('quotes/edit/<itemID>', views.editQuote),
     path('quotes/edit/<itemID>/submit', views.submitEdit),
     path('users/<itemID>', views.users),
-    path('quotes/delete/<itemID>', views.deleteQuote)
+    path('back', views.backToQuotes),
+    path('quotes/delete/<itemID>', views.deleteQuote),
 ]

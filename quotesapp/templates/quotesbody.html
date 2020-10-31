@@ -1,0 +1,11 @@
+<div class="d-flex flex-row maincontent allQuotes">
+    {% include "allquotespartial.html" %}
+</div>
+<div class="maincontent pt-3">
+    <form action="" method="POST" name="addQuote">
+        {% csrf_token %}
+        <h3>Add Quote</h3>
+        {{ AddQuote.as_p }}
+        <input type="submit" value="Add Quote">
+    </form>
+</div>

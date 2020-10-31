@@ -1,0 +1,12 @@
+<div class="mt-4">
+    {% if quote.addedBy.email == request.session.user.email %}
+    <p><a href="" class="edit text-reset" data-catid="{{quote.id}}">Edit</a> | <a href="/quotes/delete/{{quote.id}}" class="delete text-reset">Delete</a></p>
+    <div class="edit{{quote.id}}"></div>
+    {% endif %}
+    <p>{{quote.quotedBy}}: {{quote.message}}</p>
+    <p>Added By: <a href="/users/{{quote.addedBy.id}}" class="text-reset">{{quote.addedBy.name}}</a></p>
+    <form action="/quotes/removefavorite/{{quote.id}}" method="POST" class="removeFavorite" data-catid="{{quote.id}}">
+        {% csrf_token %}
+        <input type="submit" value="Remove From Favorites">
+    </form>
+</div>

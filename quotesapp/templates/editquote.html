@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Edit Quote</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    </head>
-    <body>
-        <h2 class="m-3 p-2">Welcome, {{ request.session.user.name }}!</h2>
-        <a href="/logout" class="m-3 p-2">Log Out</a>
-        <a href="/quotes" class="m-3 p-2">Back to Quotes</a>
-        <div class="d-flex m-3">
-            <form action="/quotes/edit/{{quote.id}}/submit" method="POST" class="p-2 border border-dark black">
-                {% csrf_token %}
-                <h3>Edit Quote</h3>
-                <p>Quoted By: <input type="text" name="quotedBy"></p>
-                <p>Message: <textarea name="message" cols="30" rows="10"></textarea></p>
-                <input type="submit">
-            </form>
-        </div>
-    </body>
-</html>
+<div class="popup">
+        <form action="/quotes/edit/{{quote.id}}/submit" method="POST" data-catid="{{quote.id}}" class="editform">
+            {% csrf_token %}
+            <h3>Edit Quote</h3>
+            <p>Quoted By: <input type="text" name="quotedBy" value="{{quote.quotedBy}}"></p>
+            <p>Message: <input type="text" name="message" value="{{quote.message}}"></p>
+            <input type="submit">
+        </form> 
+        <input type="submit" class="Close" data-catid="{{quote.id}}" value="Close"> 
+    </div>
